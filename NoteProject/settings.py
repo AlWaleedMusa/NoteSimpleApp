@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-=o)cgmxak4^m=(w*j&bz56o*n^t=)vae_2*g8*dt5y3o1aj&76
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 
 # Application definition
@@ -64,8 +64,12 @@ WSGI_APPLICATION = 'NoteProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+		'PASSWORD': 'NUPONBKfsELtioYDlhojBLkJegApetSA',
+		'HOST': 'viaduct.proxy.rlwy.net',
+		'PORT': '21401',
     }
 }
 
