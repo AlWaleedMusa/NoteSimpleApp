@@ -1,0 +1,32 @@
+{% block content %}
+
+<style>
+	.custom-delete-position {
+		right: 15px;
+		bottom: 15px;
+	}
+	.custom-update-position {
+		right: 100px;
+		bottom: 15px;
+	}
+
+</style>
+
+
+{% if add_note %}
+	<div class="col h-auto border rounded-3 border-grey">
+		{% include 'add_note.html' %}
+	</div>
+{% elif show_update %}
+	<div class="col h-auto border rounded-3 border-grey m-1">
+		{% include 'update_note.html' %}
+	</div>
+{% else %}
+	{% if notes %}
+		{% include 'show_note.html' %}
+	{% elif search_note %}
+		{% include 'show_search.html' %}
+	{% endif %}
+{% endif %}
+
+{% endblock content %}

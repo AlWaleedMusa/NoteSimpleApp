@@ -1,0 +1,13 @@
+{% if show_lm %}
+<div class="col h-auto border rounded-3 border-grey m-1 pb-5 position-relative">
+	<h5 class="p-2 d-flex justify-content-between">{{ note_data.title }}
+		<small class="fs-6" >
+				Last modified :  
+			<span class="text-muted">{{ note_data.updated_at|timesince }}</span>
+		</small>
+	</h5>
+	<p class="text-body-secondary p-2">{{ note_data.body|linebreaksbr|safe }}</p>
+		<a href="{% url 'delete_note' note_data.id %}" class="custom-delete-position btn btn-danger position-absolute">Delete</a>
+		<a href="{% url 'update_note' note_data.id %}" class="custom-update-position btn btn-primary position-absolute">Update</a>
+</div>
+{% endif %}
