@@ -1,47 +1,49 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
-
-<div class="row m-4 d-flex justify-content-center">
-    <div class="col-5">
-        <div class="d-flex justify-content-between align-content-center">
-            <div class="mb-3">
-                <a class="text-decoration-none" href="{% url 'main' %}"><h1>Notes</h1></a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-6 col-lg-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="mb-0">
+                    <a class="text-decoration-none" href="{% url 'main' %}"><h1>Notes</h1></a>
+                </div>
+                <div class="mt-2">
+                    <a href="{% url 'add_note' %}" class="btn btn-success">Add New</a>
+                </div>
             </div>
-            <div class="mt-2">
-                <a href="{% url 'add_note' %}" class="btn btn-success">Add New</a>
-            </div>
-        </div>
-        <div>
-            <form method="post" action="{% url 'search' %}" class="d-flex justify-content-between">
+            <form method="post" action="{% url 'search' %}" class="mb-3">
                 {% csrf_token %}
-                <input type="text" name="search" placeholder="Search" class="form-control w-100 me-2" required>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <div class="input-group">
+                    <input type="text" name="search" placeholder="Search" class="form-control" required>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
             </form>
+            <hr>
+            {% if found %}
+                {% for note in note_to_find %}
+                    <div class="list-group my-1">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'note' note.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    {{ note.title }}<small>{{ note.created_at|timesince }} ago</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for note in notes %}
+                    <div class="list-group my-1">
+                        <a href="{% url 'note' note.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            {{ note.title }}<small>{{ note.created_at|timesince }} ago</small>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        <hr>
-        {% if found %}
-            {% for note in note_to_find %}
-                <ul class="list-group my-1">
-                <a
-                    href="{% url 'search_note' note.id %}"
-                    class="list-group-item d-flex justify-content-between"
-                    >{{ note.title }}<small>{{ note.created_at|timesince }} ago</small></a
-                >
-                </ul>
-            {% endfor %}
-        {% else %}
-            {% for note in notes %}
-                <ul class="list-group my-1">
-                <a
-                    href="{% url 'note' note.id %}"
-                    class="list-group-item d-flex justify-content-between"
-                    >{{ note.title }}<small>{{ note.created_at|timesince }} ago</small></a
-                >
-                </ul>
-            {% endfor %}
-        {% endif %}
-    </div>
         {% include 'note.html' %}
+    </div>
 </div>
 
 {% endblock content %}

@@ -29,7 +29,7 @@ def add_note(request):
 		form = add_noteForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect ('add_note')
+			return redirect ('main')
 	else:
 		form = add_noteForm()
 		return render(request, 'main.html', {'form':form, 'add_note':add_note, 'notes':notes})
@@ -50,7 +50,7 @@ def update_note(request, pk):
 		form = add_noteForm(request.POST, instance=note_to_update)
 		if form.is_valid():
 			form.save()
-			return redirect('main')
+			return redirect('note', pk=note_to_update.id)
 	else:
 		form = add_noteForm(instance=note_to_update)
 		return render(request, 'main.html', {'form':form, 'show_update':show_update, 'notes':notes})
